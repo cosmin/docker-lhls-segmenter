@@ -7,7 +7,7 @@ function start_segmenter() {
 
 function start_chunk_web_server() {
     cd /opt/webserver
-    ./index.js -p 8080 -d /media -a 127.0.0.1 &
+    ./index.js -p 8080 -d /media -a 0.0.0.0 &
 }
 
 function start() {
