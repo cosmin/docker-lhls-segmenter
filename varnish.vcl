@@ -42,14 +42,8 @@ sub vcl_backend_response {
 
     if (beresp.status >= 500) {
         set beresp.ttl = 0s;
-    } elsif (beresp.status == 404) {
-        set beresp.ttl = 4s;
     } else {
-        if (bereq.url ~ "\.(m3u8)$") {
-            set beresp.ttl = 2s;
-        } else {
-            set beresp.ttl = 5m;
-        }
+        set beresp.ttl = 4s;
     }
 
     set beresp.http.X-Cacheable = "YES";
@@ -65,5 +59,6 @@ sub vcl_deliver {
     } else {
         set resp.http.X-Cache = "MISS";
     }
+
     return(deliver);
 }
