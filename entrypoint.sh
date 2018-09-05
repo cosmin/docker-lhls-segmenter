@@ -7,12 +7,17 @@ function start_segmenter() {
 
 function start_chunk_web_server() {
     cd /opt/webserver
-    ./index.js -p 8080 -d /media -a 0.0.0.0 &
+    ./index.js -p 5000 -d /media -a 127.0.0.1 >/dev/null 2>&1 &
+}
+
+function start_varnish() {
+    service varnish start
 }
 
 function start() {
     start_segmenter
     start_chunk_web_server
+    start_varnish
     wait $(jobs -p)
 }
 
