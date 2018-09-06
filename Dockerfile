@@ -31,4 +31,4 @@ EXPOSE 1234/tcp
 # files will go here
 VOLUME /media
 
-ENTRYPOINT /root/entrypoint.sh
+ENTRYPOINT ["/root/entrypoint.sh"]
