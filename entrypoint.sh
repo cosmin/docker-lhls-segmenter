@@ -2,7 +2,7 @@
 
 function start_segmenter() {
     cd /opt/segmenter
-    ./transport-stream-segmenter-tcp.js 1234 /media segment_$(date +"%s")_ stream.m3u8 4 0.0.0.0 event 3  &
+    ./transport-stream-segmenter-tcp.js 1234 /media segment_$(date +"%s")_ stream.m3u8 2 0.0.0.0 event 3  &
 }
 
 function start_chunk_web_server() {
