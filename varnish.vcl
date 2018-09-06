@@ -27,7 +27,11 @@ sub vcl_recv {
     }
 
     if (req.method == "GET") {
-        return(hash);
+       if (req.url ~ "\.m3u8$") {
+          return(pass);
+       } else {
+          return(hash);
+       }
     }
 
     if (req.method != "GET" && req.method != "HEAD") {
