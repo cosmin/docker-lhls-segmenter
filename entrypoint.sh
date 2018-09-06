@@ -9,7 +9,7 @@ segments=3
 function start_segmenter() {
     cd /opt/segmenter
     echo "starting segmenter..."
-    ./transport-stream-segmenter-tcp.js 1234 /media segment_$(date +"%s")_ stream.m3u8 $segment_duration 0.0.0.0 $playlist_type $segments &
+    ./transport-stream-segmenter-tcp.js 1234 /media segment_$(date +"%s")_ stream.m3u8 $segment_duration 0.0.0.0 $playlist_type $segments
 }
 
 function start_chunk_web_server() {
@@ -21,7 +21,6 @@ function start_chunk_web_server() {
 function start_varnish() {
     echo "Starting varnish..."
     service varnish start >/dev/null 2>&1
-    service varnish status
 }
 
 function usage() {
@@ -46,16 +45,16 @@ while getopts ":d:t:s:h" opt; do
             segments=$OPTARG
             ;;
         h)
-            usage
+            usage >&2
             exit 0
             ;;
         \?)
-            usage
+            usage >&2
             echo "Error: invalid option: -$OPTARG" >&2
             exit 1
             ;;
         :)
-            usage
+            usage >&2
             echo "Error: option -$OPTARG requires an argument." >&2
             exit 1
             ;;
@@ -65,10 +64,9 @@ done
 
 function start() {
     echo "Configuration: segments $segments, segment duration $segment_duration, playlist type $playlist_type"
-    start_segmenter
     start_chunk_web_server
     start_varnish
-    wait $(jobs -p)
+    start_segmenter
 }
 
 start
